@@ -1,1 +1,53 @@
-# huffman-coding
+# Huffman Coding Lab
+
+For this lab assignment you are going to create a text file compression program.  To accomplish this us the Huffman tree as described in the Huffman Coding Handout by Owen L. Astrachan and Chapter 30.1 of your text.  
+
+Your program should ask the user if they wish to encode or decode a file, then prompt the user for the file path of the file to open, then prompt the user for a filename to save the new file under.  It should then open the file encode or decode the content and save it to the new file path entered.  
+
+If you code your program well you should be able to compress the larger text file examples to almost half their original size. 
+
+## Developing and testing:
+This time there are no automated tests for you to use or any starting code, it's all up to you.  I might recommend starting with a Huffman ADT class with encode and decode interface methods, but it's up to you. You can and should use STD Container libraries for Hash Tables, Unordered Lists, Priority Queues if you need them, but you ***must code the Huffman tree yourself***. I've included a few example files you can use to test your program.  
+
+Below in this ReadMe file add a short description of how to use your program and how it is implemented.  Include some results from your compression tests, how much are you able to compress a large text file? 
+
+## Your program needs to:
+
+1. Ask the user if they want to compress of decompress a file.  
+2. Get input file path.
+3. Get a path to save the new compressed or decompressed file.
+4. And then exit.  Your program should **not** remain open between compression and decompression sessions. 
+
+### Example of running the program to compress a file:
+
+![Compress Example](images/compressing.png)
+
+### Example of running the program to decompress a file:
+
+![Decompress Example](images/decompressing.png)
+
+
+## Writing to a binary file. 
+One of the things this assignment requires is that you be able to write a binary string as a binary file.  Since this is outside the scope of this class I've included a Storage Class for you to use or emulate.  The Storage driver will take Binary string chunks and store them to a binary file.  It will also open a binary file and return to you binary string chunks 8 bits at a time. It will also allow you to store and read header information that you'll need to stash and rebuild your huffman tree. See the StorageDriver.cpp for an example of how to use the Storage Class. 
+
+## Huffman Node and using a priority queue
+I've also included a Node.h file that can be used for the huffman tree or as an example.  When putting Node pointers in a stl priority queue you'll need to let the queue know how to compare two nodes.  The struct compareWeights in the Node.h file does exactly this.  You can find more information here: https://www.geeksforgeeks.org/stl-priority-queue-for-structure-or-class/
+
+**Grading rubric 100 points for the first lab assignment**
+
+| Points | Requirements                                                                                                                                                                                                                                                                               |
+|--------|--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| 30     | Huffman Tree: You code demonstrates the ability to create a Huffman tree.                                                                                                                                                                                                                  |
+| 30     | Encoding:  Your program is able to encode a string using the Huffman tree.                                                                                                                                                                                                                 |       
+| 30     | Decoding: Your program is able to decode a string using the Huffman tree.                                                                                                                                                                                                                  |       
+| 15     | File IO:  You program is able to open encode/decode and save a file correctly.  Including some form of storing the a representation of the huffman tree in the encoded file.                                                                                                               |        
+| 15     | Large Files:  Your program is capable of handling large file by incrementally reading in the file while creating and encoding/decoding the Huffman tree.                                                                                                                                   |       
+| 10     | Short write up, appended to this readme, describing both how to use your program and how it is implemented.                                                                                                                                                                                          |        
+| 20     | Good coding practices, including: self-commenting variable names, one statement per line, properly indenting and spacing, good  descriptive comments, and a lack of coding errors like memory leaks. **Create documenting comments for each method public and private**  |
+
+
+
+## Enter you description below:
+The compression algorithm works by first counting the frequency of each unique character in the file. It stores the frequency of each character in an unordered map with character as the key. During this frequency count, the length of this input file is also being tracked for later use in decompression. It then traverses the map and creates a node for each pair of character and frequency. Each node is also loaded into a priority queue during the traversal. The highest priority is given to the character node with lowest frequency/weight. As a result, during the next step when nodes are loaded out of the queue to build the tree, the node with the lowest frequency is taken out first. Two consecutives nodes are taken out during each iteration of the priority queue when building the Huffman tree. These nodes are then the children of a parent node that is created during each iteration. In the end, the nodes in the queue end up being the leaves of the tree while the internal nodes of the tree, with null character follow towards the root with each serving as a position for “1” or “0”. After the iteration, there is one last element in the queue which will serve as the root of the tree. Additionally, during each iteration, the merged node itself is loaded back into the queue, which allows it to create the internal nodes. Once the Huffman tree is built, it’s traversed for each leaf to obtain the code of the character stored at that leaf. The code for each character is stored on a map. This map is then used to create a binary version of the original text, which is written into the binary file in (1KB) chunks at a time, to avoid overhead due to I/O operations. The map is then also used to create the header string (which is also stored in the binary file) that is used in decompression. The header string contains each unique character than its code next to the character and this combination is separated by a separator.
+
+The decompression algorithm works by first getting the header from the binary file, which is then interpreted in order to rebuild the Huffman tree. This header string is traversed in “chunks” separated by the separator. Each “chunk” (or token) contains the text character as the first character in that token and the rest is the Huffman code for that character. Once these codes have been stored in the map, a Huffman tree is then built by creating appropriate nodes for each iteration depending on if “1” or “0” is encountered. Next, the binary version of the file (stored in string) is traversed, while also walking through the Huffman tree based on if “0” or “1” is encountered, once the leaf node of the tree is encountered, it will obtain the letter from it and write it to the decoded text file.
