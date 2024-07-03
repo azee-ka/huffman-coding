@@ -28,13 +28,12 @@ One of the things this assignment requires is that you be able for writing a bin
 ## Huffman Node and using a priority queue
 A Node.h file that can be used for the huffman tree.  When putting Node pointers in a stl priority queue, custom operator overload is implemented to let the queue know how to compare two nodes.  The struct compareWeights in the Node.h file does exactly this.  You can find more information here: https://www.geeksforgeeks.org/stl-priority-queue-for-structure-or-class/
 
-| Requirements Met                                                                                                                                                                                                                                                                              |
-|--------|--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| Huffman Tree: Code demonstrates the ability to create a Huffman tree.                                                                                                                                                                                                                  |
-| Encoding:  Program is able to encode a string using the Huffman tree.                                                                                                                                                                                                                 |       
-| Decoding: Program is able to decode a string using the Huffman tree.                                                                                                                                                                                                                  |       
-| File IO:  Program is able to open encode/decode and save a file correctly.  Including some form of storing the a representation of the huffman tree in the encoded file.                                                                                                               |        
-| Large Files:  Program is capable of handling large file by incrementally reading in the file while creating and encoding/decoding the Huffman tree.                                                                                                                                   |       
+| Requirements Met
+| Huffman Tree: Code demonstrates the ability to create a Huffman tree. |
+| Encoding:  Program is able to encode a string using the Huffman tree. |       
+| Decoding: Program is able to decode a string using the Huffman tree. |       
+| File IO:  Program is able to open encode/decode and save a file correctly.  Including some form of storing the a representation of the huffman tree in the encoded file. |        
+| Large Files:  Program is capable of handling large file by incrementally reading in the file while creating and encoding/decoding the Huffman tree. |       
 | Short write up, appended to this readme, describing both how to use the program and how it is implemented. |        
 | Good coding practices, including: self-commenting variable names, one statement per line, properly indenting and spacing, good  descriptive comments, and a lack of coding errors like memory leaks. **Create documenting comments for each method public and private**  |
 
